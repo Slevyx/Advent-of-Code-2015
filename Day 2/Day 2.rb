@@ -1,4 +1,4 @@
-$GIFTS = "3x11x24
+GIFTS = "3x11x24
 13x5x19
 1x9x27
 24x8x21
@@ -998,18 +998,18 @@ $GIFTS = "3x11x24
 3x12x15
 24x25x17
 14x6x11"
-$total_paper = 0
-$total_ribbon = 0
-$GIFTS.split("\n").each do |gift|
+total_paper = 0
+total_ribbon = 0
+GIFTS.split("\n").each do |gift|
     gift = gift.split("x")
     gift.map!(&:to_i)
     l = gift[0] 
     w = gift[1]  
     h = gift[2]
     min_values = gift.min(2) { |a, b| a<=>b}
-    $total_paper = $total_paper + (2*l*w + 2*w*h + 2*h*l) + min_values[0]*min_values[1]
-    $total_ribbon = $total_ribbon + 2*min_values[0] + 2*min_values[1] + l*w*h
+    total_paper = total_paper + (2*l*w + 2*w*h + 2*h*l) + min_values[0]*min_values[1]
+    total_ribbon = total_ribbon + 2*min_values[0] + 2*min_values[1] + l*w*h
 end
 
-p $total_paper
-p $total_ribbon
+p total_paper
+p total_ribbon

@@ -1,4 +1,4 @@
-$WORDS = "sszojmmrrkwuftyv
+WORDS = "sszojmmrrkwuftyv
 isaljhemltsdzlum
 fujcyucsrxgatisb
 qiqqlmcgnhzparyg
@@ -999,7 +999,7 @@ iduapzclhhyfladn
 fbpyzxdfmkrtfaeg
 yzsmlbnftftgwadz"
 
-$FORBIDDEN_STRINGS = %w(ab cd pq xy)
+FORBIDDEN_STRINGS = %w(ab cd pq xy)
 
 def filter_by_forbidden_strings
     
