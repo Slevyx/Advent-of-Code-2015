@@ -1000,7 +1000,26 @@ fbpyzxdfmkrtfaeg
 yzsmlbnftftgwadz"
 
 FORBIDDEN_STRINGS = %w(ab cd pq xy)
+VOWELS = %w(a e i o u)
+DOUBLE_LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('').map { |letter| letter + letter}
+nice_words = 0
 
-def filter_by_forbidden_strings
-    
+def filter_by_double_letters(word)
+    return DOUBLE_LETTERS.any? { |double_letters| word.index(double_letters) != -1 }
 end
+
+def filter_by_forbidden_strings(word)
+    return FORBIDDEN_STRINGS.any? { |forbidden_string| word.index(forbidden_string) != -1 }
+end
+
+def filter_by_vowels(word)
+    return word.split("").reduce(0) { |vowels, char| VOWELS.index(char) === -1 ? vowels : ++vowels } >= 3
+end
+
+def is_nice_word(word)
+    return filter_by_vowels(word) && filter_by_double_letters(word) && !filter_by_forbidden_strings(word)
+end
+
+nice_words = WORDS.split("\n").reduce(0) { |total_nice_words, word| is_nice_word(word) ? ++total_nice_words : total_nice_words }
+
+p nice_words
