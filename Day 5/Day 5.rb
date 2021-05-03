@@ -1004,22 +1004,22 @@ VOWELS = %w(a e i o u)
 DOUBLE_LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('').map { |letter| letter + letter}
 nice_words = 0
 
-def filter_by_double_letters(word)
-    return DOUBLE_LETTERS.any? { |double_letters| word.index(double_letters) != -1 }
+def has_double_letters?(word)
+    return DOUBLE_LETTERS.any? { |double_letters| word.index(double_letters) != nil }
 end
 
-def filter_by_forbidden_strings(word)
-    return FORBIDDEN_STRINGS.any? { |forbidden_string| word.index(forbidden_string) != -1 }
+def has_forbidden_strings?(word)
+    return FORBIDDEN_STRINGS.any? { |forbidden_string| word.index(forbidden_string) != nil }
 end
 
-def filter_by_vowels(word)
-    return word.split("").reduce(0) { |vowels, char| VOWELS.index(char) === -1 ? vowels : ++vowels } >= 3
+def has_three_vowels?(word)
+    return word.split("").reduce(0) { |vowels, char| VOWELS.index(char) != nil ? vowels+=1 : vowels } >= 3
 end
 
-def is_nice_word(word)
-    return filter_by_vowels(word) && filter_by_double_letters(word) && !filter_by_forbidden_strings(word)
+def is_nice_word?(word)
+    return !has_forbidden_strings?(word) && has_three_vowels?(word) && has_double_letters?(word)
 end
 
-nice_words = WORDS.split("\n").reduce(0) { |total_nice_words, word| is_nice_word(word) ? ++total_nice_words : total_nice_words }
+nice_words = WORDS.split("\n").reduce(0) { |total_nice_words, word| is_nice_word?(word) ? total_nice_words+=1 : total_nice_words }
 
 p nice_words
