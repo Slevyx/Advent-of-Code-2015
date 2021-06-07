@@ -1,0 +1,6 @@
+a to b = 129
+a to c = 58
+a to d = 13
+b to c = 24
+b to d = 60
+c to d = 71
