@@ -1,4 +1,4 @@
-WIRES = "af AND ah -> ai
+af AND ah -> ai
 NOT lk -> ll
 hz RSHIFT 1 -> is
 NOT go -> gp
@@ -336,71 +336,4 @@ b RSHIFT 1 -> v
 o AND q -> r
 NOT p -> q
 k AND m -> n
-as RSHIFT 2 -> at"
-
-OPERATOR_REGEX = /[A-Z]+/
-ARGUMENTS_REGEX = /[a-z0-9]+/
-WIRE_MAPPING = Hash.new
-BITWISE_AND = lambda {|a, b| a & b}
-BITWISE_OR = lambda {|a, b| a | b}
-BITWISE_NOT = lambda {|a| ~a}
-BITWISE_LSHIFT = lambda {|a, b| a << b}
-BITWISE_RSHIFT = lambda {|a, b| a >> b}
-
-def bitwise_methods(operator, a, b)
-    case operator
-    when 'AND'
-        BITWISE_AND.call(a, b)
-    when 'OR'
-        BITWISE_OR.call(a, b)
-    when 'NOT'
-        BITWISE_NOT.call(a)
-    when 'LSHIFT'
-        BITWISE_LSHIFT.call(a, b)
-    when 'RSHIFT'
-        BITWISE_RSHIFT.call(a, b)
-    end
-end
-    
-def is_number?(arg)
-    arg.to_i.to_s == arg
-end
-
-def parse_wire(wire)
-    operator = wire.scan(OPERATOR_REGEX)
-    arguments = wire.scan(ARGUMENTS_REGEX)
-    return {destination: arguments.pop, command: {operator: operator[0], args: arguments.map! {|argument| argument = is_number?(argument) ? argument.to_i : argument}}}
-end
-
-def calculate_wire(wire_name)
-    wire = WIRE_MAPPING[wire_name]
-    #if destination is an Integer, return it.
-    # e.g. calling calculate_wire on 1 in {:operator=>OR, :args=>[1, "g"]} or in {:operator=>nil, :args=>[14146]}
-    if(wire_name.class == Integer)
-        return wire_name
-    end
-    #if an Integer is associated to a destination
-    # e.g. "lf"=>Integer
-    if (wire.class == Integer)
-        return wire
-    end
-    #calculate_wire on NOT 2nd argument returns nil
-    if(wire_name.nil?)
-        return nil
-    end
-    if(wire[:operator].nil?)
-    	#Overwriting map keys.
-        WIRE_MAPPING.store(wire_name, calculate_wire(wire[:args][0]))
-    else
-    	#Overwriting map keys.
-        WIRE_MAPPING.store(wire_name, bitwise_methods(wire[:operator], calculate_wire(wire[:args][0]), calculate_wire(wire[:args][1])))
-    end
-    return WIRE_MAPPING[wire_name]
-end
-
-WIRES.split("\n").each do |wire|
-    parsed_wire = parse_wire(wire)
-    WIRE_MAPPING.store(parsed_wire[:destination], parsed_wire[:command])
-end
-    
-p calculate_wire("a")
+as RSHIFT 2 -> at

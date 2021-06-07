@@ -374,15 +374,13 @@ end
 
 def calculate_wire(wire_name)
     wire = WIRE_MAPPING[wire_name]
-    p wire_name
-    p wire
     #if destination is an Integer, return it.
     # e.g. calling calculate_wire on 1 in {:operator=>OR, :args=>[1, "g"]} or in {:operator=>nil, :args=>[14146]}
     if(wire_name.class == Integer)
         return wire_name
     end
     #if an Integer is associated to a destination
-    # e.g. "lf"=>Integer
+    # e.g. Integer => 'lf'
     if (wire.class == Integer)
         return wire
     end
